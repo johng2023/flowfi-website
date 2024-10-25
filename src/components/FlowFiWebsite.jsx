@@ -306,7 +306,6 @@ const InterestForm = () => {
   );
 };
   </div>
-);
 
 const ContactPage = () => (
   <div className="max-w-4xl mx-auto p-8">

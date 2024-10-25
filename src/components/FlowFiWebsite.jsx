@@ -4,7 +4,7 @@ import { Home, Mail, Info, FileText, Send, DollarSign, Shield, BarChart } from '
 const Navigation = ({ currentPage, setCurrentPage }) => (
   <nav className="bg-green-700 text-white p-4">
     <div className="max-w-6xl mx-auto flex justify-between items-center">
-      <div className="text-2xl font-bold">FlowFi Cannabis</div>
+      <div className="text-2xl font-bold">FlowFi</div>
       <div className="flex gap-6">
         <button 
           onClick={() => setCurrentPage('home')}
@@ -38,7 +38,7 @@ const Navigation = ({ currentPage, setCurrentPage }) => (
 const HomePage = () => (
   <div className="max-w-6xl mx-auto p-8">
     <div className="text-center mb-16">
-      <h1 className="text-5xl font-bold mb-6">Welcome to FlowFi Cannabis</h1>
+      <h1 className="text-5xl font-bold mb-6">Welcome to FlowFi</h1>
       <p className="text-xl text-gray-600 mb-8">Specialized Financial Management for Cannabis Dispensaries</p>
     </div>
 
@@ -55,7 +55,7 @@ const HomePage = () => (
       <div className="bg-white p-8 rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold mb-4">Our Solution</h2>
         <p className="text-gray-600">
-          FlowFi Cannabis provides a comprehensive financial platform specifically designed for dispensaries, 
+          FlowFi provides a comprehensive financial platform specifically designed for dispensaries, 
           offering compliant cash management, automated reporting, and industry-specific financial tools.
         </p>
       </div>
@@ -304,7 +304,7 @@ const ContactPage = () => (
         <div className="space-y-4">
           <div>
             <h3 className="font-bold mb-2">Email</h3>
-            <p>support@flowficannabis.com</p>
+            <p>support@flowfi.com</p>
           </div>
           <div>
             <h3 className="font-bold mb-2">Phone</h3>

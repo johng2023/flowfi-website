@@ -162,18 +162,62 @@ const ProductPage = () => (
   </div>
 );
 
-const InterestForm = () => (
-  <div className="max-w-2xl mx-auto p-8">
-  <div className="max-w-2xl mx-auto p-8">
-    <h1 className="text-4xl font-bold mb-8">Express Interest</h1>
-    <form className="space-y-6">
+const InterestForm = () => {
+  const [formStatus, setFormStatus] = useState('');
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setFormStatus('sending');
+    
+    const formData = new FormData(e.target);
+    const data = {
+      to: 'john.guckian13@gmail.com',
+      subject: 'New Interest Form Submission',
+      message: `
+        Dispensary: ${formData.get('dispensaryName')}
+        License: ${formData.get('license')}
+        State: ${formData.get('state')}
+        Locations: ${formData.get('locations')}
+        Revenue: ${formData.get('revenue')}
+        Challenges: ${formData.get('challenges')}
+      `
+    };
+
+    try {
+      // Using EmailJS service - you'll need to sign up and add your service ID
+      await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', data);
+      setFormStatus('success');
+    } catch (error) {
+      setFormStatus('error');
+    }
+  };
+
+  return (
+    <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-center">Express Interest</h1>
+      
+      {formStatus === 'success' && (
+        <div className="mb-6 p-4 bg-green-100 text-green-700 rounded-lg">
+          Thank you for your interest! We'll be in touch soon.
+        </div>
+      )}
+      
+      {formStatus === 'error' && (
+        <div className="mb-6 p-4 bg-red-100 text-red-700 rounded-lg">
+          There was an error sending your form. Please try again.
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          Dispensary Name
+          Dispensary Name *
         </label>
         <input
           type="text"
-          className="w-full p-3 border rounded-lg"
+          name="dispensaryName"
+          required
+          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
           placeholder="Your Dispensary Name"
         />
       </div>
@@ -183,7 +227,9 @@ const InterestForm = () => (
         </label>
         <input
           type="text"
-          className="w-full p-3 border rounded-lg"
+          name="license"
+          required
+          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
           placeholder="Your Cannabis License Number"
         />
       </div>
@@ -191,7 +237,10 @@ const InterestForm = () => (
         <label className="block text-sm font-medium text-gray-700 mb-2">
           State
         </label>
-        <select className="w-full p-3 border rounded-lg">
+        <select 
+          name="state"
+          required
+          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
           <option>California</option>
           <option>Colorado</option>
           <option>Washington</option>
@@ -203,7 +252,10 @@ const InterestForm = () => (
         <label className="block text-sm font-medium text-gray-700 mb-2">
           Number of Locations
         </label>
-        <select className="w-full p-3 border rounded-lg">
+        <select 
+          name="locations"
+          required
+          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
           <option>1 location</option>
           <option>2-5 locations</option>
           <option>6-10 locations</option>
@@ -214,7 +266,10 @@ const InterestForm = () => (
         <label className="block text-sm font-medium text-gray-700 mb-2">
           Monthly Revenue Range
         </label>
-        <select className="w-full p-3 border rounded-lg">
+        <select 
+          name="revenue"
+          required
+          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
           <option>Under $50k</option>
           <option>$50k - $100k</option>
           <option>$100k - $500k</option>
@@ -226,20 +281,30 @@ const InterestForm = () => (
           Current Challenges
         </label>
         <textarea
-          className="w-full p-3 border rounded-lg"
+          name="challenges"
+          required
+          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
           rows="4"
           placeholder="Tell us about your current financial management challenges..."
         ></textarea>
       </div>
-      <button
-        type="submit"
-        className="w-full bg-green-700 text-white py-3 px-6 rounded-lg hover:bg-green-800 flex items-center justify-center gap-2"
-      >
-        <Send size={20} /> Submit Interest
-      </button>
-    </form>
-  </div>
-);
+        <button
+          type="submit"
+          disabled={formStatus === 'sending'}
+          className="w-full bg-green-700 text-white py-3 px-6 rounded-lg hover:bg-green-800 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {formStatus === 'sending' ? (
+            <>Sending...</>
+          ) : (
+            <>
+              <Send size={20} /> Submit Interest
+            </>
+          )}
+        </button>
+      </form>
+    </div>
+  );
+};
   </div>
 );
 

@@ -92,7 +92,6 @@ const HomePage = () => (
 
 const ProductPage = () => (
   <div className="max-w-6xl mx-auto p-8">
-  <div className="max-w-6xl mx-auto p-8">
     <h1 className="text-4xl font-bold mb-8">Our Product</h1>
     <div className="grid md:grid-cols-2 gap-12">
       <div className="space-y-6">
@@ -157,8 +156,6 @@ const ProductPage = () => (
         </div>
       </div>
     </div>
-  </div>
-);
   </div>
 );
 
@@ -305,10 +302,8 @@ const InterestForm = () => {
     </div>
   );
 };
-  </div>
 
 const ContactPage = () => (
-  <div className="max-w-4xl mx-auto p-8">
   <div className="max-w-4xl mx-auto p-8">
     <h1 className="text-4xl font-bold mb-8">Contact Us</h1>
     <div className="grid md:grid-cols-2 gap-12">
@@ -385,8 +380,6 @@ const ContactPage = () => (
         </div>
       </div>
     </div>
-  </div>
-);
   </div>
 );
 

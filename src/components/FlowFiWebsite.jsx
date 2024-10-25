@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Home, Mail, Info, FileText, Send, DollarSign, Shield, BarChart } from 'lucide-react';
+import emailjs from 'emailjs-com';
 
 const Navigation = ({ currentPage, setCurrentPage }) => (
   <nav className="bg-green-700 text-white p-4">

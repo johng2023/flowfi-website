@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, Mail, Info, FileText, Send, DollarSign, Shield, BarChart } from 'lucide-react';
+import { Home, Mail, Info, FileText, Send, DollarSign, Shield, BarChart, MessageSquare } from 'lucide-react';
 import emailjs from 'emailjs-com';
 
 const Navigation = ({ currentPage, setCurrentPage }) => (
@@ -30,6 +30,12 @@ const Navigation = ({ currentPage, setCurrentPage }) => (
           className={`flex items-center gap-2 ${currentPage === 'contact' ? 'text-green-200' : ''}`}
         >
           <Mail size={20} /> Contact
+        </button>
+        <button 
+          onClick={() => setCurrentPage('feedback')}
+          className={`flex items-center gap-2 ${currentPage === 'feedback' ? 'text-green-200' : ''}`}
+        >
+          <MessageSquare size={20} /> Feedback
         </button>
       </div>
     </div>
@@ -384,6 +390,122 @@ const ContactPage = () => (
   </div>
 );
 
+const FeedbackPage = () => {
+  const [formStatus, setFormStatus] = useState('');
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setFormStatus('sending');
+    
+    const formData = new FormData(e.target);
+    try {
+      // Simulate sending feedback
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setFormStatus('success');
+      e.target.reset();
+    } catch (error) {
+      setFormStatus('error');
+    }
+  };
+
+  return (
+    <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-center">Product Feedback</h1>
+      
+      {formStatus === 'success' && (
+        <div className="mb-6 p-4 bg-green-100 text-green-700 rounded-lg">
+          Thank you for your feedback! We appreciate your input.
+        </div>
+      )}
+      
+      {formStatus === 'error' && (
+        <div className="mb-6 p-4 bg-red-100 text-red-700 rounded-lg">
+          There was an error sending your feedback. Please try again.
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            What feature would you like to see improved?
+          </label>
+          <select 
+            name="feature"
+            required
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+          >
+            <option value="">Select a feature</option>
+            <option>Compliance Management</option>
+            <option>Cash Operations</option>
+            <option>Analytics Dashboard</option>
+            <option>Reporting Tools</option>
+            <option>User Interface</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Rate your satisfaction with the current feature
+          </label>
+          <div className="flex gap-4">
+            {[1, 2, 3, 4, 5].map((rating) => (
+              <label key={rating} className="flex flex-col items-center">
+                <input
+                  type="radio"
+                  name="rating"
+                  value={rating}
+                  className="mb-1"
+                />
+                {rating}
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Detailed Feedback
+          </label>
+          <textarea
+            name="feedback"
+            required
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+            rows="4"
+            placeholder="Please describe your feedback in detail..."
+          ></textarea>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Suggested Improvements
+          </label>
+          <textarea
+            name="suggestions"
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+            rows="4"
+            placeholder="What specific improvements would you suggest?"
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          disabled={formStatus === 'sending'}
+          className="w-full bg-green-700 text-white py-3 px-6 rounded-lg hover:bg-green-800 flex items-center justify-center gap-2 disabled:opacity-50"
+        >
+          {formStatus === 'sending' ? (
+            'Sending...'
+          ) : (
+            <>
+              <Send size={20} /> Submit Feedback
+            </>
+          )}
+        </button>
+      </form>
+    </div>
+  );
+};
+
 const FlowFiWebsite = () => {
   const [currentPage, setCurrentPage] = useState('home');
 
@@ -394,6 +516,7 @@ const FlowFiWebsite = () => {
       {currentPage === 'product' && <ProductPage />}
       {currentPage === 'interest' && <InterestForm />}
       {currentPage === 'contact' && <ContactPage />}
+      {currentPage === 'feedback' && <FeedbackPage />}
     </div>
   );
 };
